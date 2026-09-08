@@ -14,7 +14,7 @@ import (
 func main() {
 
 	cfg := config.MustLoad()
-	_, err :=db.Connect(cfg.DatabaseURL)
+	db, err :=db.Connect(cfg.DatabaseURL)
 	if err != nil {
 		log.Fatalf("main.db.connect: %v", err)
 	}

@@ -25,6 +25,7 @@ func main() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("GET /healthz", handlers.Health)
 	mux.HandleFunc("GET /listings", handlers.List(db))//closure factory pattern
+	mux.HandleFunc("DELETE /listings/{id}", handlers.DeleteListing(db))
 
 	srv := http.Server{
 		Addr:   ":" + cfg.Port,

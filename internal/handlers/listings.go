@@ -54,3 +54,19 @@ func List(db *sql.DB) http.HandlerFunc {//closure factory pattern
 		_ = json.NewEncoder(w).Encode(listings)
 	}
 }
+
+func DeleteListing(db *sql.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		id := r.PathValue("id")
+
+		_, err := db.Exec(
+			`DELETE FROM listings WHERE id = $1`,id)
+			if err != nil {
+				log.Printf("delete: %v", err)
+				http.Error(w, "internal server error", http.StatusInternalServerError)
+				return
+			}
+
+			w.WriteHeader(http.StatusNoContent)
+	}
+}
